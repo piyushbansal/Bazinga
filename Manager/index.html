@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Manager - Take Orders</title>
+    <link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="js/parse-1.1.15.min.js"></script>
+    <script src="js/todos.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Todo App Interface -->
+
+    <div id="todoapp">
+      <div class="title">
+        <h1>Take Orders</h1>
+      </div>
+
+      <div class="content">
+      </div>
+      
+    </div>
+
+    <div id="credits">
+      Powered by <a href="http://web.iiit.ac.in/~piyush.bansal/wheresmyorder">Where's My Order</a>
+    </div>
+
+    <!-- Templates -->
+
+    <script type="text/template" id="login-template">
+      <header id="header"></header>
+      <div class="login">
+        <form class="login-form">
+          <h2>Log In</h2>
+          <div class="error" style="display:none"></div>
+          <input type="text" id="login-username" placeholder="Username" />
+          <input type="password" id="login-password" placeholder="Password" />
+          <button>Log In</button>
+        </form>
+
+        <form class="signup-form">
+          <h2>Sign Up</h2>
+          <div class="error" style="display:none"></div>
+          <input type="text" id="signup-username" placeholder="Username" />
+          <input type="password" id="signup-password" placeholder="Create a Password" />
+          <button>Sign Up</button>
+        </form>
+      </div>
+    </script>
+
+    <script type="text/template" id="manage-todos-template">
+      <div id="user-info">
+        Signed in as <%= Parse.User.current().get("username") %> (<a href="#" class="log-out">Log out</a>)
+      </div>
+
+      <div class="section">
+
+        <header id="header">
+          <input id="new-todo" placeholder="Address" type="text" />
+          <input id="new-todo2" placeholder="Email" type="text" />
+          <input id="new-todo3" type = "number" placeholder="Delivery Boy ID" type="text" />
+
+    
+
+        <div id="main">
+        
+          <input id="toggle-all" type="checkbox" style = "display:none;">
+          <label for="toggle-all">Mark all as complete</label>
+
+        
+      
+      <label style="display: inline-block; width: 38%; " class="heading"><b>Address</b></label>
+          <label style=" display: inline-block; width: 25%; " class="heading"><b>Email</b></label>
+          <label style="display: inline-block; width: 20%; text-align: right" class="heading"><b>Delivery Boy ID</b></label>
+            
+
+        
+          <ul id="todo-list">
+            <img src='images/spinner.gif' class='spinner' />
+          </ul>
+        </div>
+
+        <div id="todo-stats"></div>
+      </div>
+      </header>
+    </script>
+
+    <script type="text/template" id="item-template">
+      
+      
+    <li class="<%= done ? 'completed' : '' %>">
+	 <div class="view">
+	  
+     
+    
+    <input  class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %>> 
+	  <label style="display: inline-block; width: 25%; " class="todo-content"><%= address %></label>
+    <label style=" display: inline-block; width: 40%;" class="todo-content2"><%= email %></label>
+    <label style="display: inline-block; width: 10%; " class="todo-content3"><%= delivery_boy_id %></label>
+	  <button class="todo-destroy"></button>
+    
+    
+	</div>
+	<input class="edit" value="<%= address %>">
+  <input class="edit2" value="<%= email %>">
+  <input class="edit3" value="<%= delivery_boy_id %>">
+  
+  
+
+      </li>
+    </script>
+
+    <script type="text/template" id="stats-template">
+      <footer id="footer">
+	<span id="todo-count"><strong><%= remaining %></strong> <%= remaining == 1 ? 'item' : 'items' %> left</span>
+	<ul id="filters">
+	  <li>
+	    <a href="javascript:void(0)" id="all" class="selected">All</a>
+	  </li>
+	  <li>
+	    <a href="javascript:void(0)" id="active">Active</a>
+	  </li>
+	  <li>
+	    <a href="javascript:void(0)" id="completed">Completed</a>
+	  </li>
+	</ul>
+	<button id="clear-completed">Clear completed (<%= done %>)</button>
+      </footer>
+    </script>
+
+  </body>
+
+</html>
